@@ -5,5 +5,212 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
     </head>
-    <body></body>
+    <body>
+        <div class="grid">
+            <aside>
+                <div class="projects-header">
+                    <div class="container">
+                        <h2>Projects</h2>
+                        <form action="">
+                            <input
+                                type="text"
+                                name="project"
+                                id="project"
+                                placeholder="New project..."
+                                required
+                            />
+                            <button type="submit" id="add-project">
+                                <img
+                                    src="./folder-plus.svg"
+                                    alt="folder-plus"
+                                />
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="projects">
+                        <div class="project current">
+                            <img src="./folder.svg" alt="folder" />
+                            <h4>Default</h4>
+                            <div class="project-count"><h3>0</h3></div>
+                        </div>
+                        <div class="project">
+                            <img src="./folder.svg" alt="folder" />
+                            <h4>Default</h4>
+                            <div class="project-count"><h3>0</h3></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <header>
+                <div class="container">
+                    <div class="info">
+                        <div class="header">
+                            <h1>TaskFlow</h1>
+                            <h3>Stay organized, stay productive</h3>
+                        </div>
+                        <div class="tasks-status">
+                            <div class="status">
+                                <img src="./circle.svg" alt="circle" /><span
+                                    >0</span
+                                >
+                                active
+                            </div>
+                            <div class="status">
+                                <img
+                                    src="./check-circle.svg"
+                                    alt="check-circle"
+                                /><span>0</span>
+                                completed
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-task btn" id="add-task">
+                        <img src="./plus.svg" alt="plus" />Add task
+                    </button>
+                </div>
+            </header>
+            <main>
+                <div class="container">
+                    <div class="tasks-sort">
+                        <button type="button" class="current">All</button>
+                        <button type="button">Active</button>
+                        <button type="button">Completed</button>
+                        <button type="button">
+                            <img src="./calendar.svg" alt="calendar" />Newest
+                        </button>
+                        <button type="button">
+                            <img src="./star.svg" alt="star" />Priority
+                        </button>
+                    </div>
+                    <div class="tasks container">
+                        <!-- <div class="no-tasks">
+                            <img src="./check-circle.svg" alt="check-circle" />
+                            <h3>No tasks found</h3>
+                            <h4>Add your first task to get started</h4>
+                        </div> -->
+                        <div class="task-container">
+                            <input
+                                type="checkbox"
+                                name="is-completed"
+                                id="is-completed"
+                            />
+                            <div class="task">
+                                <div class="task-info">
+                                    <h3 id="task-name">Task name</h3>
+                                    <h4 id="task-description">
+                                        Task description
+                                    </h4>
+                                    <div class="task-additional">
+                                        <div
+                                            class="task-priority high"
+                                            id="task-priority"
+                                        >
+                                            <h4>high</h4>
+                                        </div>
+                                        <div class="due-date" id="due-date">
+                                            <img
+                                                src="./calendar.svg"
+                                                alt="calendar"
+                                            />
+                                            <h4>18.04.2025</h4>
+                                        </div>
+                                        <h4 id="creation-date">14.09.2025</h4>
+                                    </div>
+                                    <h5 id="task-notes">Task notes</h5>
+                                </div>
+                                <div class="task-edit">
+                                    <button type="button">low</button>
+                                    <button type="button">medium</button>
+                                    <button type="button" class="current">
+                                        high
+                                    </button>
+                                    <button type="button" class="edit-btn">
+                                        <img
+                                            src="./edit-one.svg"
+                                            alt="edit-one"
+                                        />
+                                    </button>
+                                    <button type="button" class="edit-btn">
+                                        <img src="./trash.svg" alt="trash" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <div class="container">
+                    <h3>Made with love by vo1dy-labs</h3>
+                </div>
+            </footer>
+        </div>
+        <dialog id="add-popup">
+            <div class="overlay">
+                <div class="popup">
+                    <div class="container">
+                        <h2>Create New Task</h2>
+                        <form action="" id="add-task-form">
+                            <div class="form-container">
+                                <label for="title">Title</label>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    id="title"
+                                    placeholder="Enter task title..."
+                                    required
+                                />
+                            </div>
+                            <div class="form-container">
+                                <label for="desc">Description</label>
+                                <textarea
+                                    name="desc"
+                                    id="desc"
+                                    placeholder="Add a description..."
+                                ></textarea>
+                            </div>
+                            <div class="form-container options">
+                                <div class="form-container">
+                                    <label for="priority">Priority</label>
+                                    <select name="priority" id="priority">
+                                        <option value="low">Low</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="high">High</option>
+                                    </select>
+                                </div>
+                                <div class="form-container">
+                                    <label for="project-folder">Project</label>
+                                    <select
+                                        name="project-folder"
+                                        id="project-folder"
+                                    ></select>
+                                </div>
+                            </div>
+                            <div class="form-container">
+                                <label for="dueDate">Due Date</label>
+                                <input
+                                    type="date"
+                                    name="dueDate"
+                                    id="dueDate"
+                                />
+                            </div>
+                            <div class="form-container">
+                                <label for="notes">Notes</label>
+                                <textarea
+                                    name="notes"
+                                    id="notes"
+                                    placeholder="Additional notes..."
+                                ></textarea>
+                            </div>
+                            <button type="submit" id="create-task">
+                                Create task
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+    </body>
 </html>
