@@ -7,6 +7,7 @@ export class Task {
         this.notes = notes;
         this.priority = priority;
         this.isCompleted = isCompleted;
+        this.creationDate = Date.now();
     }
     set title(value) {
         this._title = value ?? null;
@@ -43,5 +44,11 @@ export class Task {
     }
     get isCompleted() {
         return this._isCompleted;
+    }
+    set creationDate(value) {
+        this._creationDate = value;
+    }
+    get creationDate() {
+        return this._creationDate;
     }
 }

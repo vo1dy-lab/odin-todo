@@ -17,7 +17,7 @@ export function renderProjects(projects, container) {
         projectImg.alt = 'Folder';
 
         projectName.textContent = project.name;
-        projectCount.textContent = project.todos.length;
+        projectCount.textContent = project.tasks.length;
 
         projectCountDiv.appendChild(projectCount);
         projectDiv.appendChild(projectImg);
@@ -36,6 +36,7 @@ export function renderOptionsProject(projects, selectHtml) {
         const projectOptionHtml = document.createElement('option');
         projectOptionHtml.setAttribute('value', project.name.toLowerCase());
         projectOptionHtml.textContent = project.name;
+        projectOptionHtml.dataset.id = project.id;
         selectHtml.appendChild(projectOptionHtml);
     });
 }

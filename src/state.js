@@ -16,3 +16,26 @@ export const addProject = (projectName) => {
 
     return null;
 };
+
+export const addTaskToProject = (
+    projectId,
+    taskTitle,
+    taskDescription,
+    taskPriority,
+    taskDueDate,
+    taskNotes
+) => {
+    const project = projects.find((p) => p.id === projectId);
+    if (projectId) {
+        const newTask = new Task(
+            taskTitle,
+            taskDescription,
+            taskDueDate,
+            taskNotes,
+            taskPriority
+        );
+        project.add(newTask);
+    }
+
+    return null;
+};
