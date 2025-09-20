@@ -1,4 +1,5 @@
 const projectsContainerHtml = document.querySelector('.projects');
+const tasksContainerHtml = document.querySelector('.tasks');
 const projectNameInputHtml = document.querySelector('#project');
 const addProjectBtnHtml = document.querySelector('#add-project');
 const addTaskBtnHtml = document.querySelector('#add-task');
@@ -15,6 +16,7 @@ const taskNotesInputHtml = document.querySelector('#notes');
 
 export const DOMElements = {
     projectsContainerHtml,
+    tasksContainerHtml,
     projectNameInputHtml,
     addProjectBtnHtml,
     addTaskBtnHtml,

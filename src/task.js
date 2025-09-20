@@ -1,5 +1,6 @@
 export class Task {
     id = crypto.randomUUID();
+    _creationDate = Date.now();
     constructor(title, desc, dueDate, notes, priority, isCompleted) {
         this.title = title;
         this.desc = desc;
@@ -7,7 +8,6 @@ export class Task {
         this.notes = notes;
         this.priority = priority;
         this.isCompleted = isCompleted;
-        this.creationDate = Date.now();
     }
     set title(value) {
         this._title = value ?? null;
@@ -44,9 +44,6 @@ export class Task {
     }
     get isCompleted() {
         return this._isCompleted;
-    }
-    set creationDate(value) {
-        this._creationDate = value;
     }
     get creationDate() {
         return this._creationDate;

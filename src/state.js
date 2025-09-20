@@ -4,7 +4,23 @@ import { Task } from './task';
 const projects = [];
 projects.push(new Project('Default'));
 
+let activeProjectId = null;
+
+if (projects.length > 0) activeProjectId = projects[0].id;
+
 export const getProjects = () => projects;
+
+export const getProjectById = (projectId) => {
+    const currentProject = projects.find((project) => project.id == projectId);
+
+    return currentProject;
+};
+
+export const getActiveProjectId = () => activeProjectId;
+
+export const setActiveProjectId = (projectId) => {
+    activeProjectId = projectId;
+};
 
 export const addProject = (projectName) => {
     if (projectName) {
@@ -25,7 +41,7 @@ export const addTaskToProject = (
     taskDueDate,
     taskNotes
 ) => {
-    const project = projects.find((p) => p.id === projectId);
+    const project = getProjectById(projectId);
     if (projectId) {
         const newTask = new Task(
             taskTitle,

@@ -1,6 +1,6 @@
 import img from './folder.svg';
 
-export function renderProjects(projects, container) {
+export function renderProjects(projects, container, activeProjectId) {
     container.textContent = '';
 
     projects.forEach((project) => {
@@ -25,6 +25,7 @@ export function renderProjects(projects, container) {
         projectDiv.appendChild(projectCountDiv);
         projectDiv.dataset.id = project.id;
 
+        if (project.id === activeProjectId) projectDiv.classList.add('current');
         container.appendChild(projectDiv);
     });
 }

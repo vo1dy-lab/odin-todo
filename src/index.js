@@ -1,5 +1,6 @@
 import './styles.css';
 import { renderProjects, renderOptionsProject } from './projectRenderer';
+import { renderTasks } from './taskRenderer.js';
 import * as ui from './ui.js';
 import * as state from './state.js';
 
@@ -18,7 +19,11 @@ function handleAddProject(e) {
         state.addProject(projectName);
         const projects = state.getProjects();
 
-        renderProjects(projects, ui.DOMElements.projectsContainerHtml);
+        renderProjects(
+            projects,
+            ui.DOMElements.projectsContainerHtml,
+            state.getActiveProjectId()
+        );
         renderOptionsProject(projects, ui.DOMElements.projectSelectHtml);
     }
 }
@@ -26,7 +31,8 @@ function handleAddProject(e) {
 function handleCreateTask(e) {
     const taskTitle = ui.getTaskTitle();
     const taskDescription = ui.getTaskDescription();
-    const taskPriority = ui.getTaskPriority();
+    const taskPriority = ui.getTaskPriority().value;
+    console.log(taskPriority);
     const projectId = ui.getSelectedProject().dataset.id;
     const taskDueDate = ui.getTaskDueDate();
     const taskNotes = ui.getTaskNotes();
@@ -46,14 +52,49 @@ function handleCreateTask(e) {
         ui.closeAddTaskPopup();
         ui.resetAddTaskForm();
         const projects = state.getProjects();
-        renderProjects(projects, ui.DOMElements.projectsContainerHtml);
+        renderProjects(
+            projects,
+            ui.DOMElements.projectsContainerHtml,
+            projectId
+        );
+        renderTasks(
+            state.getProjectById(projectId),
+            ui.DOMElements.tasksContainerHtml
+        );
     }
+}
+
+function handleProjectFolder(e) {
+    const currentProject = e.target.closest('.project');
+
+    if (!currentProject) return;
+    const projectId = currentProject.dataset.id;
+    state.setActiveProjectId(projectId);
+    renderProjects(
+        state.getProjects(),
+        ui.DOMElements.projectsContainerHtml,
+        projectId
+    );
+    renderTasks(
+        state.getProjectById(projectId),
+        ui.DOMElements.tasksContainerHtml
+    );
 }
 
 function initializeApp() {
     const initialProjects = state.getProjects();
-    renderProjects(initialProjects, ui.DOMElements.projectsContainerHtml);
+    const activeProjectId = state.getActiveProjectId();
+
+    renderProjects(
+        initialProjects,
+        ui.DOMElements.projectsContainerHtml,
+        activeProjectId
+    );
     renderOptionsProject(initialProjects, ui.DOMElements.projectSelectHtml);
+    renderTasks(
+        state.getProjectById(activeProjectId),
+        ui.DOMElements.tasksContainerHtml
+    );
 
     ui.DOMElements.addProjectBtnHtml.addEventListener(
         'click',
@@ -67,6 +108,10 @@ function initializeApp() {
     ui.DOMElements.createTaskBtnHtml.addEventListener(
         'click',
         handleCreateTask
+    );
+    ui.DOMElements.projectsContainerHtml.addEventListener(
+        'click',
+        handleProjectFolder
     );
 }
 

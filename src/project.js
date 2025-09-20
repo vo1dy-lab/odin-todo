@@ -1,6 +1,6 @@
 export class Project {
-    tasks = [];
     id = crypto.randomUUID();
+    _tasks = [];
     constructor(name) {
         this.name = name;
     }
@@ -10,7 +10,10 @@ export class Project {
     get name() {
         return this._name;
     }
+    get tasks() {
+        return this._tasks;
+    }
     add(task) {
-        this.tasks.push(task);
+        this._tasks.push(task);
     }
 }
