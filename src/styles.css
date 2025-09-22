@@ -193,6 +193,11 @@ footer h3 {
     display: flex;
     align-items: baseline;
     gap: 16px;
+    background-color: rgb(255 157 0 / 33.4%);
+    border: 1px solid rgb(255 157 0 / 34.5%);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 16px;
 }
 
 .task-container input {
@@ -278,6 +283,12 @@ footer h3 {
 .task-edit button:active {
     background-color: #e53d00;
     color: #fff;
+}
+
+.task-completed {
+    text-decoration: line-through;
+    background-color: rgb(255 157 0 / 17.8%);
+    border: 1px solid rgb(255 157 0 / 20%);
 }
 
 button.edit-btn {

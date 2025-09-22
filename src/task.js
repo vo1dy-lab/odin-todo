@@ -1,13 +1,15 @@
+import { format } from 'date-fns';
+
 export class Task {
     id = crypto.randomUUID();
-    _creationDate = Date.now();
-    constructor(title, desc, dueDate, notes, priority, isCompleted) {
+    _creationDate = new Date();
+    constructor(title, desc, dueDate, notes, priority) {
         this.title = title;
         this.desc = desc;
         this.dueDate = dueDate;
         this.notes = notes;
         this.priority = priority;
-        this.isCompleted = isCompleted;
+        this.isCompleted = false;
     }
     set title(value) {
         this._title = value ?? null;
@@ -22,10 +24,10 @@ export class Task {
         return this._desc;
     }
     set dueDate(value) {
-        this._dueDate = value ?? new Date.now();
+        this._dueDate = value ? new Date(value) : new Date();
     }
     get dueDate() {
-        return this._dueDate;
+        return format(this._dueDate, 'dd.MM.yyyy');
     }
     set notes(value) {
         this._notes = value ?? null;
@@ -34,7 +36,7 @@ export class Task {
         return this._notes;
     }
     set priority(value) {
-        this._priority = value ?? null;
+        this._priority = value ?? 'low';
     }
     get priority() {
         return this._priority;
@@ -46,6 +48,6 @@ export class Task {
         return this._isCompleted;
     }
     get creationDate() {
-        return this._creationDate;
+        return format(this._creationDate, 'dd.MM.yyyy');
     }
 }

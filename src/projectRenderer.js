@@ -1,7 +1,7 @@
 import img from './folder.svg';
 
-export function renderProjects(projects, container, activeProjectId) {
-    container.textContent = '';
+export function renderProjects(projects, projectsContainer, activeProjectId) {
+    projectsContainer.textContent = '';
 
     projects.forEach((project) => {
         const projectDiv = document.createElement('div');
@@ -26,18 +26,24 @@ export function renderProjects(projects, container, activeProjectId) {
         projectDiv.dataset.id = project.id;
 
         if (project.id === activeProjectId) projectDiv.classList.add('current');
-        container.appendChild(projectDiv);
+        projectsContainer.appendChild(projectDiv);
     });
 }
 
-export function renderOptionsProject(projects, selectHtml) {
+export function renderOptionsProject(projects, selectHtml, activeProjectId) {
     selectHtml.textContent = '';
 
-    projects.forEach((project) => {
+    const sortedProjects = [...projects].sort((a, b) => {
+        if (a.id === activeProjectId) return -1;
+        if (b.id === activeProjectId) return 1;
+        return 0;
+    });
+
+    sortedProjects.forEach((project) => {
         const projectOptionHtml = document.createElement('option');
-        projectOptionHtml.setAttribute('value', project.name.toLowerCase());
-        projectOptionHtml.textContent = project.name;
+        projectOptionHtml.value = project.id;
         projectOptionHtml.dataset.id = project.id;
+        projectOptionHtml.textContent = project.name;
         selectHtml.appendChild(projectOptionHtml);
     });
 }

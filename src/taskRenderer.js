@@ -64,10 +64,16 @@ export function renderTasks(currentProject, tasksContainer) {
         taskEditDiv.classList.add('task-edit');
         taskLowPriorityBtn.setAttribute('type', 'button');
         taskLowPriorityBtn.textContent = 'low';
+        taskLowPriorityBtn.classList.add('priority-btn');
+        taskLowPriorityBtn.dataset.priority = 'low';
         taskMediumPriorityBtn.setAttribute('type', 'button');
         taskMediumPriorityBtn.textContent = 'medium';
+        taskMediumPriorityBtn.classList.add('priority-btn');
+        taskMediumPriorityBtn.dataset.priority = 'medium';
         taskHighPriorityBtn.setAttribute('type', 'button');
         taskHighPriorityBtn.textContent = 'high';
+        taskHighPriorityBtn.classList.add('priority-btn');
+        taskHighPriorityBtn.dataset.priority = 'high';
 
         switch (task.priority) {
             case 'low':
@@ -88,15 +94,22 @@ export function renderTasks(currentProject, tasksContainer) {
 
         taskDelBtn.classList.add('edit-btn');
         taskDelBtn.id = 'task-del';
+        taskDelBtn.classList.add('task-del');
         taskDelBtnImg.src = delBtnImg;
         taskDelBtnImg.alt = 'trash';
 
+        taskContainerDiv.dataset.id = task.id;
+        taskInputCheckbox.checked = task.isCompleted;
         taskInfoName.textContent = task.title;
         taskInfoDesc.textContent = task.desc;
         taskPriority.textContent = task.priority;
         taskDueDate.textContent = task.dueDate;
         taskCreationDate.textContent = task.creationDate;
         taskNotes.textContent = task.notes;
+
+        if (task.isCompleted) {
+            taskContainerDiv.classList.add('task-completed');
+        }
 
         taskEditDiv.appendChild(taskLowPriorityBtn);
         taskEditDiv.appendChild(taskMediumPriorityBtn);

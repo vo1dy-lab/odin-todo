@@ -14,6 +14,9 @@ const taskPrioritySelectHtml = document.querySelector('#priority');
 const taskDueDateHtml = document.querySelector('#dueDate');
 const taskNotesInputHtml = document.querySelector('#notes');
 
+const activeTasksCountHtml = document.querySelector('#active-count');
+const completedTasksCountHtml = document.querySelector('#completed-count');
+
 export const DOMElements = {
     projectsContainerHtml,
     tasksContainerHtml,
@@ -29,6 +32,8 @@ export const DOMElements = {
     taskPrioritySelectHtml,
     taskDueDateHtml,
     taskNotesInputHtml,
+    activeTasksCountHtml,
+    completedTasksCountHtml,
 };
 
 export const showAddTaskPopup = () => {
@@ -39,7 +44,21 @@ export const closeAddTaskPopup = () => {
     addTaskPopupHtml.close();
 };
 
+export const showEditTaskPopup = (task) => {
+    taskTitleInputHtml.value = task.title;
+    taskDescInputHtml.value = task.desc;
+    taskPrioritySelectHtml.value = task.priority;
+    taskDueDateHtml.value = task.dueDate;
+    taskNotesInputHtml.value = task.notes;
+
+    createTaskBtnHtml.textContent = 'Update';
+    createTaskBtnHtml.dataset.taskId = task.id;
+    addTaskPopupHtml.show();
+};
+
 export const resetAddTaskForm = () => {
+    createTaskBtnHtml.textContent = 'Create';
+    delete createTaskBtnHtml.dataset.taskId;
     addTaskFormHtml.reset();
 };
 
@@ -86,4 +105,9 @@ export const getTaskNotes = () => {
     const taskNotes = taskNotesInputHtml.value;
 
     return taskNotes;
+};
+
+export const updateTasksCount = (activeCount, completedCount) => {
+    activeTasksCountHtml.textContent = activeCount;
+    completedTasksCountHtml.textContent = completedCount;
 };
