@@ -29,6 +29,7 @@ function handleAddProject(e) {
             ui.DOMElements.projectSelectHtml,
             state.getActiveProjectId()
         );
+        state.updateLocalData();
     }
 }
 
@@ -41,8 +42,10 @@ function handleTaskForm(e) {
 
         if (taskId) {
             handleUpdateTask(taskId);
+            state.updateLocalData();
         } else {
             handleCreateTask();
+            state.updateLocalData();
         }
     }
 }
@@ -74,10 +77,7 @@ function handleUpdateTask(taskId) {
             ui.DOMElements.projectsContainerHtml,
             projectId
         );
-        renderTasks(
-            state.getProjectById(projectId),
-            ui.DOMElements.tasksContainerHtml
-        );
+        renderTasksAndCount(projectId);
     }
 }
 
@@ -107,10 +107,7 @@ function handleCreateTask() {
             ui.DOMElements.projectsContainerHtml,
             projectId
         );
-        renderTasks(
-            state.getProjectById(projectId),
-            ui.DOMElements.tasksContainerHtml
-        );
+        renderTasksAndCount(projectId);
     }
 }
 
@@ -125,10 +122,7 @@ function handleProjectFolder(e) {
         ui.DOMElements.projectsContainerHtml,
         projectId
     );
-    renderTasks(
-        state.getProjectById(projectId),
-        ui.DOMElements.tasksContainerHtml
-    );
+    renderTasksAndCount(projectId);
     renderOptionsProject(
         state.getProjects(),
         ui.DOMElements.projectSelectHtml,
@@ -141,7 +135,6 @@ function handleTaskContainerClick(e) {
     if (!currentTask) return;
     const currentTaskId = currentTask.dataset.id;
     const currentProjectId = state.getActiveProjectId();
-    const currentProject = state.getProjectById(currentProjectId);
 
     const priorityBtn = e.target.closest('.priority-btn');
     const deleteBtn = e.target.closest('.task-del');
@@ -151,21 +144,24 @@ function handleTaskContainerClick(e) {
     if (priorityBtn) {
         const newPriority = priorityBtn.dataset.priority;
         state.updateTaskPriority(currentProjectId, currentTaskId, newPriority);
-        renderTasks(currentProject, ui.DOMElements.tasksContainerHtml);
+        renderTasksAndCount(currentProjectId);
+        state.updateLocalData();
 
         return;
     } else if (isCompletedBtn) {
         const isCompleted = isCompletedBtn.checked;
         state.updateTaskStatus(currentProjectId, currentTaskId, isCompleted);
-        renderTasks(currentProject, ui.DOMElements.tasksContainerHtml);
+        renderTasksAndCount(currentProjectId);
+        state.updateLocalData();
     } else if (deleteBtn) {
         state.removeTaskFromProject(currentProjectId, currentTaskId);
-        renderTasks(currentProject, ui.DOMElements.tasksContainerHtml);
+        renderTasksAndCount(currentProjectId);
         renderProjects(
             state.getProjects(),
             ui.DOMElements.projectsContainerHtml,
             currentProjectId
         );
+        state.updateLocalData();
 
         return;
     } else if (editBtn) {
@@ -187,7 +183,7 @@ function renderTasksAndCount(projectId) {
 }
 
 function initializeApp() {
-    const initialProjects = state.getProjects();
+    const initialProjects = state.getLocalData() ?? state.getProjects();
     const activeProjectId = state.getActiveProjectId();
 
     renderProjects(
@@ -200,10 +196,7 @@ function initializeApp() {
         ui.DOMElements.projectSelectHtml,
         state.getActiveProjectId()
     );
-    renderTasks(
-        state.getProjectById(activeProjectId),
-        ui.DOMElements.tasksContainerHtml
-    );
+    renderTasksAndCount(activeProjectId);
 
     ui.DOMElements.addProjectBtnHtml.addEventListener(
         'click',

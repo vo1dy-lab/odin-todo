@@ -1,15 +1,33 @@
 import calendarImg from './calendar.svg';
 import editBtnImg from './edit-one.svg';
 import delBtnImg from './trash.svg';
+import checkImg from './check-circle.svg';
 
 export function renderTasks(currentProject, tasksContainer) {
-    if (!currentProject || !currentProject.tasks) {
-        tasksContainer.textContent = ''; //todo;
+    tasksContainer.textContent = '';
+
+    if (currentProject.tasks.length === 0) {
+        const noTasksContainer = document.createElement('div');
+        const noTasksImg = document.createElement('img');
+        const noTasksH3 = document.createElement('h3');
+        const noTasksH4 = document.createElement('h4');
+
+        noTasksContainer.classList.add('no-tasks');
+        noTasksImg.src = checkImg;
+        noTasksImg.alt = 'check-circle';
+        noTasksH3.textContent = 'No tasks found';
+        noTasksH4.textContent = 'Add your first task to get started';
+
+        noTasksContainer.appendChild(noTasksImg);
+        noTasksContainer.appendChild(noTasksH3);
+        noTasksContainer.appendChild(noTasksH4);
+
+        tasksContainer.appendChild(noTasksContainer);
+
         return;
     }
 
     const tasks = currentProject.tasks;
-    tasksContainer.textContent = '';
 
     tasks.forEach((task) => {
         const taskContainerDiv = document.createElement('div');

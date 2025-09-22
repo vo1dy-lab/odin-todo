@@ -2,7 +2,6 @@ import { Project } from './project';
 import { Task } from './task';
 
 const projects = [];
-projects.push(new Project('Default'));
 
 let activeProjectId = null;
 
@@ -126,3 +125,48 @@ export const getCompletedTasks = (projectId) => {
 
     return null;
 };
+
+export const updateLocalData = () => {
+    localStorage.setItem('projects', JSON.stringify(projects));
+};
+
+export const getLocalData = () => {
+    const data = JSON.parse(localStorage.getItem('projects'));
+    if (!data) return;
+
+    const revivedData = data.map((projectData) => {
+        const project = new Project(projectData._name);
+        project.id = projectData.id;
+        project._tasks = projectData._tasks.map((taskData) => {
+            const task = new Task(
+                taskData._title,
+                taskData._desc,
+                taskData._dueDate,
+                taskData._notes,
+                taskData._priority
+            );
+            task.id = taskData.id;
+            task.isCompleted = taskData._isCompleted;
+            task._creationDate = taskData._creationDate;
+
+            return task;
+        });
+
+        return project;
+    });
+
+    return revivedData;
+};
+
+const initializeProjects = () => {
+    const data = getLocalData();
+
+    if (data) {
+        projects.push(...data);
+        activeProjectId = projects[0].id;
+    } else {
+        projects.push(new Project('Default'));
+    }
+};
+
+initializeProjects();
